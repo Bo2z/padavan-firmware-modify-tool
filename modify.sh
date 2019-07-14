@@ -1,7 +1,6 @@
 #!/bin/sh
 sudo echo "Starting..."
 MKSQSHFS4='./mksquashfs'
-PADJFFS2='./padjffs2'
 UNSQSHFS='./unsquashfs'
 MKIMAGE='./mkimage'
 case "$1" in
@@ -31,8 +30,6 @@ Product_ID=`$MKIMAGE -l kernel.bin|awk -F":" '$1=="Product ID" {gsub(/ +/,"",$0)
 
 SIZE=`wc -c kernel.bin | awk '{ print $1 }'`
 
-#read -p "Press any key to continue." var
-#$PADJFFS2 xxx.bin
 dd if=xxx.bin of=tmp.bin bs=1 skip=64
 $MKIMAGE -A mips -O linux -T kernel -C lzma -a $Load_Address -e $Entry_Point -k $SIZE -n $Product_ID -V $Kernel_Ver $FS_Ver -d tmp.bin $2
 rm newsecondchunk.bin xxx.bin tmp.bin
